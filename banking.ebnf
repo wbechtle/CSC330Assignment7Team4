@@ -1,25 +1,28 @@
-program = {action} ;
+program ::= {action} ;
 
-
-first_name = letter, {letter};
-last_name = letter, {letter};
-account_number = letter, letter, digit, digit, digit, digit, digit, digit ;
-balance = amount;
-amount = digit , {digit} , [".", digit, [digit]]
-
-action = deposit_action | withdraw_action
+action ::= deposit_action | withdraw_action
         | balance_action | create_new_ action ;
 
-deposit_action = "  DEPOSIT" amount "TO" account_number;
-withdraw_action = "WITHDRAW" amount "FROM" account_number;
-balance_action =  "BALANCE" account_number ;
-create_new_action = "CREATE NEW" first_name last_name
+deposit_action ::= "  DEPOSIT" amount "TO" account_number;
+withdraw_action ::= "WITHDRAW" amount "FROM" account_number;
+balance_action ::=  "BALANCE" account_number ;
+create_new_action ::= "CREATE NEW" first_name last_name
 
-letter =   "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" 
+first_name ::= string ;
+last_name ::= string ;
+account_number ::= letter, letter, digit, digit, digit, digit, digit, digit ;
+balance ::= amount;
+amount ::= digit , {digit} , [".", digit, [digit]]
+
+string ::= letter, {letter};
+integer ::= digit {digit}
+float ::= digit {digit} "." digit {digit}
+
+letter ::=   "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
          | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" 
          | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" 
          | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
 
-digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
 

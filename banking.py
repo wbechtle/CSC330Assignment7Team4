@@ -1,10 +1,4 @@
 class Banking: #All
-
-
-    content = ""
-    with open('test.lang', 'r') as file:
-        content = file.read()
-
     '''
     Field needed:
     -first name
@@ -20,16 +14,21 @@ class Banking: #All
     '''
 DIGITS = '0123456789'
 
-TT_INT = 'TT_INT'  # integers will be used for account nunber
-TT_FLOAT = 'TT_FLOAT'  # balance will be a float
-TT_STRING = 'TT_STRING'  # used for account info
-TT_PLUS = 'TT_PLUS'  # used to deposit
-TT_MINUS = 'TT_MINUS'  # used to withdraw
+TT_INT = 'INT'
+TT_FLOAT = 'FLOAT'
+TT_STRING = 'STRING'
+TT_DEPOSIT = 'DEPOSIT'
+TT_WITHDRAW = 'WITHDRAW'
+TT_BALANCE = 'BALANCE'
+TT_CREATE = 'CREATE'
+TT_ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+TT_END = 'END'  # Or TT_EXIT
+
 
 class Token: # Wyatt
     '''
-            Finish Later
-            '''
+    Finish Later
+    '''
 
 
     def __init__(self, type_, value):
@@ -62,16 +61,13 @@ class Parser: # Wyatt
     '''
 
 class Lexer: # Layla
-    '''
-    Finish Later
-    '''
 
-
+   #
     def __init__(self, text):
         self.text = text
         self.pos = -1
         self.current_char = None
-        self.advance()
+        self.advance() # advances so first character is
 
     def advance(self):
         self.pos += 1
@@ -83,18 +79,61 @@ class Lexer: # Layla
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance() # ignores spaces and tabs
+            elif self.text.startswith("DEPOSIT"):
+                tokens.append(Token(TT_DEPOSIT))
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            elif self.text.startswith("WITHDRAW"):
+                tokens.append(Token(TT_WITHDRAW))
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            elif self.text.startswith("CREATE"):
+                tokens.append(Token(TT_CREATE))
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            elif self.text.startswith("BALANCE"):
+                tokens.append(Token(TT_BALANCE))
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            elif self.text.startswith("END") :
+                tokens.append(Token(TT_END))
+                self.current_char = None
+
             elif self.current_char in DIGITS:
-                tokens.append(self.make_number)
-            elif self.current_char == '+':
-                tokens.append(Token(TT_PLUS))
-                self.advance()
-            elif self.current_char == '-':
-                tokens.append(Token(TT_MINUS))
-                self.advance()
+                tokens.append(self.make_number())
+
+            elif self.current_char == '"':
+                tokens.append(self.make_string())
+
             else:
                 char = self.current_char
                 self.advance()
-                return [], IllegalCharError("'" + {char}+ "'")
+                return [], IllegalCharError("'" + char+ "'")
 
 
 
@@ -112,11 +151,22 @@ class Lexer: # Layla
             else:
                 num_str += self.current_char
             self.advance()
-
         if dot_count == 0:
             return Token(TT_INT, int(num_str))
         else:
             return Token(TT_FLOAT, float(num_str))
+
+    def make_string(self):
+
+        self.advance()
+        new_str = ''
+        while self.current_char != None and self.current_char != '"':
+            new_str += self.current_char
+            self.advance()
+        if self.current_char == '"':
+            self.advance()
+            return Token(TT_STRING, new_str)
+        return None, IllegalCharError("Closing quote missing")
 #######################################
 # ERRORS
 #######################################
