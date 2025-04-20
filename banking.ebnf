@@ -1,7 +1,7 @@
 program ::= {action} ;
 
 action ::= deposit_action | withdraw_action
-        | balance_action | create_new_ action ;
+         | balance_action | create_new_ action ;
 
 deposit_action ::= "  DEPOSIT" amount "TO" account_number;
 withdraw_action ::= "WITHDRAW" amount "FROM" account_number;
