@@ -3,18 +3,18 @@ program ::= {action} ;
 action ::= deposit_action | withdraw_action
          | balance_action | create_new_ action ;
 
-deposit_action ::= "  DEPOSIT" amount "TO" account_number;
-withdraw_action ::= "WITHDRAW" amount "FROM" account_number;
+deposit_action ::= "  DEPOSIT" amount account_number;
+withdraw_action ::= "WITHDRAW" amount account_number;
 balance_action ::=  "BALANCE" account_number ;
 create_new_action ::= "CREATE NEW" first_name last_name
 
 first_name ::= string ;
 last_name ::= string ;
-account_number ::= letter, letter, digit, digit, digit, digit, digit, digit ;
+account_number ::= "*", letter, letter, digit, digit, digit, digit, digit, digit, "*";
 balance ::= amount;
 amount ::= digit , {digit} , [".", digit, [digit]]
 
-string ::= letter, {letter};
+string ::= '"", letter, {letter}, '"';
 integer ::= digit {digit}
 float ::= digit {digit} "." digit {digit}
 
