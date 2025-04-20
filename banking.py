@@ -67,7 +67,7 @@ class Lexer: # Layla
         self.text = text
         self.pos = -1
         self.current_char = None
-        self.advance() # advances so first character is
+        self.advance() # advances to first value
 
     def advance(self):
         self.pos += 1
@@ -91,6 +91,7 @@ class Lexer: # Layla
 
             elif self.text.startswith("WITHDRAW"):
                 tokens.append(Token(TT_WITHDRAW))
+                # advances past the 'WITHDRAW'
                 self.advance()
                 self.advance()
                 self.advance()
@@ -103,6 +104,7 @@ class Lexer: # Layla
 
             elif self.text.startswith("CREATE"):
                 tokens.append(Token(TT_CREATE))
+                # Advances past the 'CREATE'
                 self.advance()
                 self.advance()
                 self.advance()
