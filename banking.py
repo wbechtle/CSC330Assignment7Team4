@@ -48,6 +48,56 @@ def main():
 # BANKING
 #######################################
 class Banking:  # All
+##############################################
+# CSC 330 Language Design and Implementation
+# Final Project - Banking DSL
+##############################################
+# LATEST UPDATE 4/19
+# When you run the file there are commands in the main function undergoing lexical analysis
+# to return tokens
+
+
+# put into a class later - create a new class or include in another
+
+# Tokens
+DIGITS = '0123456789' # for all numbers
+LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # all caps numbers
+
+TT_INT = 'INT'
+TT_FLOAT = 'FLOAT'
+TT_STRING = 'STRING'
+TT_DEPOSIT = 'DEPOSIT' # action
+TT_WITHDRAW = 'WITHDRAW' # action
+TT_BALANCE = 'BALANCE' # action
+TT_CREATE = 'CREATE' # action
+TT_ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+TT_END = 'END'  # Or TT_EXIT
+
+#######################################
+# MAIN
+#######################################
+
+def main():
+    commands = [
+        'CREATE "Layla" "Heath"',
+        'DEPOSIT 200.00 *LH000000*',
+        'WITHDRAW 50 *MH123456*',
+        'BALANCE *01234567*',
+        'END',
+        '"hello ',
+        'PRINT',
+
+    ]
+    for cmnd in commands:
+        lexer = Lexer(cmnd)
+        tokens = lexer.make_tokens()
+        print(tokens)
+
+
+#######################################
+# BANKING
+#######################################
+class Banking:  # All
     '''
     Field needed:
     -first name
@@ -66,10 +116,21 @@ class Banking:  # All
 # TOKEN
 #######################################
 class Token:  # Wyatt
+    - while loop that runs the program until exit word is entere
+    '''
+
+
+#######################################
+# TOKEN
+#######################################
+class Token:  # Wyatt
+    '''
+    Finish Later
     '''
     Finish Later
     '''
 
+    def __init__(self, type_, value=None):
     def __init__(self, type_, value=None):
         self.type = type_
         self.value = value
@@ -83,10 +144,19 @@ class Token:  # Wyatt
 # INTERPRETER
 #######################################
 class Interpreter:  # Dom
+#######################################
+# INTERPRETER
+#######################################
+class Interpreter:  # Dom
     '''
     Finish Later
     '''
 
+
+#######################################
+# ASTNODE
+#######################################
+class ASTNode:  # Dom
 
 #######################################
 # ASTNODE
@@ -101,10 +171,20 @@ class ASTNode:  # Dom
 # BANKACCOUNT
 #######################################
 class BankAccount:  # Dom
+
+#######################################
+# BANKACCOUNT
+#######################################
+class BankAccount:  # Dom
     '''
     Finish Later
     '''
 
+
+#######################################
+# PARSER
+#######################################
+class Parser:  # Wyatt
 
 #######################################
 # PARSER
@@ -122,26 +202,91 @@ class Parser:  # Wyatt
 class Lexer:  # Layla
 
     #
+
+#######################################
+# LEXER
+#######################################
+# need to work on changing these to have 1 return statement
+class Lexer:  # Layla
+
+    #
     def __init__(self, text):
+        self.text = text # command being evaluated
         self.text = text # command being evaluated
         self.pos = -1
         self.current_char = None
         self.advance()  # advances to first value
+        self.advance()  # advances to first value
 
+    # Moves to the nexxt character
     # Moves to the nexxt character
     def advance(self):
         self.pos += 1 # position is increased by 1
         # assigns current_char to the character at that index
+        self.pos += 1 # position is increased by 1
+        # assigns current_char to the character at that index
         self.current_char = self.text[self.pos] if self.pos < len(self.text) else None
+        # if index out of range, current_char is assigned none
         # if index out of range, current_char is assigned none
 
     def make_tokens(self):
         tokens = [] # list to hold the tokens
+    def make_tokens(self):
+        tokens = [] # list to hold the tokens
 
+        # Once the end of the command is reached, current_char is assigned 'None'
         # Once the end of the command is reached, current_char is assigned 'None'
         while self.current_char != None:
 
+
             if self.current_char in ' \t':
+                self.advance()  # ignores spaces and tabs
+
+            # check for DEPOSIT command if the pos is at index 0
+            elif self.text.startswith("DEPOSIT") and self.pos == 0:
+                tokens.append(Token(TT_DEPOSIT)) # adds deposit token to list
+                # Advances past 'DEPOSIT in the command'
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            # check for WITHDRAW command if the pos is at index 0
+            elif self.text.startswith("WITHDRAW") and self.pos == 0:
+                tokens.append(Token(TT_WITHDRAW))
+                # advances past the 'WITHDRAW'
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            # check for CREATE command if the pos is at index 0
+            elif self.text.startswith("CREATE") and self.pos == 0:
+                tokens.append(Token(TT_CREATE))
+                # Advances past the 'CREATE'
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+
+            # check for BALANCE command if the pos is at index 0
+            elif self.text.startswith("BALANCE") and self.pos == 0:
+                tokens.append(Token(TT_BALANCE))
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
+                self.advance()
                 self.advance()  # ignores spaces and tabs
 
             # check for DEPOSIT command if the pos is at index 0
@@ -298,7 +443,7 @@ class Error:
 class IllegalCharError(Error):
     def __init__(self, pos_start, pos_end, details):
         super().__init__(pos_start, pos_end, 'Illegal Character', details)
-
+    
 
 if __name__ == '__main__':
-    main()
+    main()  

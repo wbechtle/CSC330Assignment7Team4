@@ -13,11 +13,19 @@ class Token:
     ####################################################
     ######               CONSTANTS                ######
     ####################################################                                         
-    TT_INT = 'TT_INT'       # integers will be used for account nunber
-    TT_FLOAT = 'TT_FLOAT'   # balance will be a float
-    TT_STRING = 'TT_STRING' # used for account info
-    TT_PLUS = 'TT_PLUS'     # used to deposit
-    TT_MINUS = 'TT_MINUS'   # used to withdraw
+    # Tokens - Changed to match EBNF update - WB
+    DIGITS = '0123456789' # for all numbers
+    LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # all caps numbers
+
+    TT_INT = 'INT'
+    TT_FLOAT = 'FLOAT'
+    TT_STRING = 'STRING'
+    TT_DEPOSIT = 'DEPOSIT' # action
+    TT_WITHDRAW = 'WITHDRAW' # action
+    TT_BALANCE = 'BALANCE' # action
+    TT_CREATE = 'CREATE' # action
+    TT_ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+    TT_END = 'END'  # Or TT_EXIT
 
     ####################################################
     ######               CONSTRUCTOR              ######

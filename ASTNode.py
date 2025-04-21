@@ -1,3 +1,5 @@
+# Added import - WB
+from ast import AST
 class ASTNode(object):
     pass
 
@@ -17,16 +19,18 @@ class BinOp(AST):
 class NumNode:
     def __init__(self, token):
         self.token= token
-        
-    def__repr__(self):
+    # Fixed spacing - WB
+    def __repr__(self):
         return f'{self.token}'
 
 class NodeVisitor(object):
     def visit(self, node):
-        methond_name = 'visit_' + type(node).__name__
+        # Fixed spelling - WB
+        method_name = 'visit_' + type(node).__name__
         visitor = getattr(self, method_name, self.generic_visit)
         return visitor(node)
         
 # Fall back method to raise an exception if it encounters a node isn't recognized 
 def generic_visit(self, node):
-    raise Exception('No Visit_{} method'. format(type(node.__name__))
+    # Fixed parenthesis
+    raise Exception('No Visit_{} method'. format(type(node.__name__)))
