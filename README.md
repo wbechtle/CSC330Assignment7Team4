@@ -136,15 +136,20 @@ To exit the program, type "exit" or "quit" at the main menu
 Language Implementation Details
 Grammar (EBNF)
 Our banking language grammar is defined in banking.ebnf. The grammar describes the syntax rules for all supported commands including account creation, deposits, withdrawals, and balance checks.
+
 Lexer
 The lexer (Lexer class) converts input strings into tokens representing command types, identifiers, numbers, and other elements of our language.
 Parser
+
 The parser (Parser class) takes tokens from the lexer and builds a structured representation according to our grammar rules.
+
 Abstract Syntax Tree (AST)
 The AST (ASTNode class) represents the hierarchical structure of parsed commands, making them easier to interpret.
+
 Interpreter
 The interpreter (Interpreter class) processes the AST and executes the corresponding banking operations on BankAccount objects.
 Specification Tests
+
 Our program includes specification tests that verify:
 
 Account creation with proper account number formatting
