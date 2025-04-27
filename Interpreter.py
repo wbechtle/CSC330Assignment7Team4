@@ -1,7 +1,7 @@
 # Layla Heath
 # CSC 330 100
 # Session 7
-# Final Project
+# Final Project - Interpreter Class
 # 4/27/2025
 
 from Parser import Deposit, Withdraw, Balance, CreateNew
@@ -30,7 +30,9 @@ class Interpreter:
             else:
                 raise Exception(f"INVALID NODE TYPE") # Default print statement
 
-    #
+###################################################################
+#####      create_new(node) - Creates a new account        ########
+###################################################################
     def create_new(self, node):
         account = BankAccount(node.first, node.last) # create new Bank Account object
         BankAccount.allAccounts.append(account) # add new account to the running list
@@ -38,43 +40,53 @@ class Interpreter:
               f"\nACCOUNT #{account.get_accountNumber()}"
               f"\nBALANCE ${account.get_balance()}\n")
 
-
+###################################################################
+#####         deposit(node) - Deposits money to account      ######
+###################################################################
     def deposit(self, node):
-        account = self.find_acct(node.account)
+        account = self.find_acct(node.account) # check if there is record of the account
         if account is None:
-            print(f"ACCOUNT #{node.account} NOT FOUND.")
+            print(f"ACCOUNT #{node.account} NOT FOUND.") # does not attempt to deposit if account is not found
         else:
-            account.deposit(node.amount)
+            account.deposit(node.amount) # deposits money to the current account and tells user new balance
             print(f"ACCOUNT {account.get_accountNumber()} ({account.get_firstName()} {account.get_lastName()}) "
                   f"NEW BALANCE: ${account.get_balance()}")
 
+###################################################################
+#####       withdraw(node) - Withdraws mone from account     ######
+###################################################################
     def withdraw(self, node):
-        account = self.find_acct(node.account)
+        account = self.find_acct(node.account) # check if the account number is valid
         if account is None:
             print(f"ACCOUNT #{node.account} NOT FOUND.")
 
-        elif node.amount > account.getBalance() :
+        elif node.amount > account.getBalance() : # check if the balance supports withdrawal amount
             print(f"INSUFFICIENT FUNDS")
         else:
-            account.withdraw(node.amount)
+            account.withdraw(node.amount) # update balance and tell updated information to user
             print(f"ACCOUNT #{account.__accountNum()} NEW BALANCE: ${account.__balance()}")
-
+###################################################################
+#####         balance(node) - Displays account info          ######
+###################################################################
     def balance(self, node):
 
-        account = self.find_acct(node.account)
+        account = self.find_acct(node.account) # check if account number is valid
         if account is None:
             print("Account not found")
             return
-        else:
+        else: # display account info
             print(f'ACCOUNT #{account.get_accountNumber()}'
-                  f'ACCOUNT HOLDER: {account.get_firstName()} {account.get_lastName()}'
-                  f'BALANCE : {account.get_balance()}')
+                  f'\nACCOUNT HOLDER: {account.get_firstName()} {account.get_lastName()}'
+                  f'\nBALANCE : {account.get_balance()}\n')
 
-
+###################################################################
+# find_acct - check for an account number in the current accounts #
+###################################################################
     def find_acct(self, account_num):
         account = None
+        # loop through account list
         for acct in BankAccount.allAccounts :
-            if acct.get_accountNumber() == account_num :
-                account = acct
+            if acct.get_accountNumber() == account_num : # if an object has a matching account number...
+                account = acct # the object is stored in the account variable
         return account
 

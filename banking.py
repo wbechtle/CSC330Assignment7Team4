@@ -2,9 +2,7 @@
 # CSC 330 Language Design and Implementation
 # Final Project - Banking DSL
 ##############################################
-# LATEST UPDATE 4/19,
-# When you run the file there are commands in the main function undergoing lexical analysis
-# to return tokens
+
 from Lexer import Lexer
 from Parser import Parser
 from Interpreter import Interpreter
@@ -12,7 +10,7 @@ from BankAccount import BankAccount
 #import BankAccount
 
 #######################################
-# MAIN
+###              MAIN              ####
 #######################################
 
 def main():
@@ -37,7 +35,9 @@ def main():
 
     run_shell()
 
-
+#####################################################################
+## run() - attempts to perform all the steps to run a DSL command ###
+#####################################################################
 def run(text) :
     lexer = Lexer(text)
     tokens = lexer.make_tokens()
@@ -45,7 +45,9 @@ def run(text) :
     AST = parser.parse()
     interpreter = Interpreter(AST)
     interpreter.interpret()
-
+#####################################################################
+####  run_shell() - Allows for user input in the command line   #####
+#####################################################################
 def run_shell():
     text = None
     while text != "END":  # program loop continues until user types done
@@ -60,7 +62,7 @@ def run_shell():
         except Exception:
             print("INVALID COMMAND")
 
-
+# call to main
 if __name__ == '__main__':
     main()
 
