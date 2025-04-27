@@ -1,23 +1,34 @@
+# Layla Heath
+# CSC 330 100
+# Session 7
+# Final Project
+# 4/27/2025
+
 from Parser import Deposit, Withdraw, Balance, CreateNew
 from BankAccount import BankAccount
 
+####################################################
+######               Interpreter              ######
+####################################################
 class Interpreter:
     def __init__(self, program):
         self.accounts = [] # list of bank account objects
-        self.program = program
+        self.program = program # program to be interpreted
 
     def interpret(self):
+        # goes through the AST to evaluate each node
         for node in self.program.actions:
-            if isinstance(node, Deposit):
+            # executes function based on node type/class
+            if isinstance(node, Deposit): # Deposit node
                 self.deposit(node)
-            elif isinstance(node, Withdraw):
+            elif isinstance(node, Withdraw): # Withdraw node
                 self.withdraw(node)
-            elif isinstance(node, Balance):
+            elif isinstance(node, Balance): # Balance node
                 self.balance(node)
-            elif isinstance(node, CreateNew):
+            elif isinstance(node, CreateNew): # Create node
                 self.create_new(node)
             else:
-                raise Exception(f"INVALID NODE TYPE")
+                raise Exception(f"INVALID NODE TYPE") # Default print statement
 
     #
     def create_new(self, node):

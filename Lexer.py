@@ -1,10 +1,19 @@
+# Layla Heath
+# CSC 330 100
+# Session 7
+# Final Project - Lexer Class
+# 4/27/2025
+
 from Token import Token
 #from Error import Error
-
+###################################
+#####          LEXER          #####
+###################################
 class Lexer:
 
+    # Tokens - Changed to match EBNF update - WB
     DIGITS = '0123456789'  # for all numbers
-    LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'  # all caps numbers
+    LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'  # letters
 
     TT_INT = 'INT'
     TT_FLOAT = 'FLOAT'
@@ -15,12 +24,11 @@ class Lexer:
     TT_CREATE = 'CREATE'  # action
     TT_ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
     TT_END = 'END'  # Or TT_EXIT
-
     def __init__(self, text):
-        self.text = text.strip() # command being evaluated
+        self.text = text.strip() # leading and trailing whitespace eliminated
         self.pos = -1
         self.current_char = None
-        self.advance()  # advances to first value
+        self.advance()  # advances to first value upon initialization
 
     # Moves to the nexxt character
     def advance(self):
@@ -78,6 +86,7 @@ class Lexer:
             # check for BALANCE command if the pos is at index 0
             elif self.text.startswith("BALANCE") and self.pos == 0:
                 tokens.append(Token(Token.TT_BALANCE))
+                # Advances past 'BALANCE'
                 self.advance()
                 self.advance()
                 self.advance()
@@ -92,7 +101,7 @@ class Lexer:
                 self.current_char = None
 
             # if the char is a number...
-            elif self.current_char in Lexer.DIGITS:
+            elif self.current_char in Token.DIGITS:
                 # make_number is called to check if a valid INT or float is created
                 tokens.append(self.make_number())
 
@@ -115,76 +124,78 @@ class Lexer:
         return tokens # returns the list of tokens
 
     def make_number(self):
-        num_str = ''
-        dot_count = 0
+        num_str = '' # will become the final number
+        dot_count = 0 # checks for decimal
 
-        while self.current_char != None and self.current_char in Lexer.DIGITS + '.':
+        while self.current_char != None and self.current_char in Token.DIGITS + '.':
             if self.current_char == '.':
-                if dot_count == 1: break
+
+                if dot_count == 1: self.current_char = None # loop exited if it has more than 1 period
                 dot_count += 1
                 num_str += '.'
             else:
-                num_str += self.current_char
+                num_str += self.current_char # character is added to final string
             self.advance()
-        if dot_count == 0:
+        if dot_count == 0: # returns int if there are no decimals
+            token = Token.TT_INT
             number = int(num_str)
         else:
+            token = Token.TT_FLOAT # returns float if there are decimals
             number = float(num_str)
 
-        return Token(Token.TT_FLOAT, number)
+        return Token(token, number) # Token object returned
 
 
     def make_string(self):
-        start = self.current_char
-        self.advance()
+        start = self.current_char # start char for Error
+        self.advance() # starts at character after the quotation mark
         new_str = ''
 
-        while self.current_char != None and self.current_char != '"':
-            new_str += self.current_char
-            self.advance()
+        while self.current_char != None and self.current_char != '"': # while end " is not met and there are still chars
+            new_str += self.current_char # next char is added to the string
+            self.advance() # move to next char
 
-        if self.current_char == '"':
+        if self.current_char == '"': # checks for closing quote
             self.advance()
             return Token(Token.TT_STRING, new_str)
         else:
             end = self.current_char
-            return None, Error.IllegalCharError(start, end, "Closing quote missing")
+            return None, IllegalCharError(start, end, "Closing quote missing") # informs user of missing quote
 
 
     def make_account_num(self):
-
         self.advance()
         start = self.current_char
         end = None
         act_num = ''
 
         while self.current_char != None and self.current_char != "*":
-            if len(act_num) < 2:
+            if len(act_num) < 2: # first 2 characters a checked to ensure they are letters
                 if self.current_char not in Lexer.LETTERS:
                     end = self.current_char
             else:
                 if self.current_char not in Lexer.DIGITS:
                     print(self.current_char)
-                    end = self.current_char
+                    end = self.current_char # assigned if there is an error with the following digits
             act_num += self.current_char
             self.advance()
 
         self.advance()
 
-        if len(act_num) == 8 and end == None:
+        if len(act_num) == 8 and end == None: # returns if it is proper length and the end was not assigned
             return Token(Token.TT_ACCOUNT_NUMBER, act_num)
-        return None, Error.IllegalCharError(start, end, "Invalid characters")
+        return None, IllegalCharError(start, end, "Invalid characters")
 
 
 #######################################
-# ERRORS - NEED TO FIX
+#######          ERRORS        ########
 #######################################
 class Error:
     def __init__(self, pos_start, pos_end, error_name, details):
-        self.pos_start = pos_start
-        self.pos_end = pos_end
-        self.error_name = error_name
-        self.details = details
+        self.pos_start = pos_start # start position
+        self.pos_end = pos_end #end position
+        self.error_name = error_name # error name
+        self.details = details  # details
 
     def as_string(self):
         result = f'{self.error_name}: {self.details}\n'
