@@ -2,46 +2,47 @@
 # CSC 330 Language Design and Implementation
 # Final Project - Banking DSL
 ##############################################
-# LATEST UPDATE 4/19
+# LATEST UPDATE 4/19,
 # When you run the file there are commands in the main function undergoing lexical analysis
 # to return tokens
-
-
-# put into a class later - create a new class or include in another
-
-# Tokens
-DIGITS = '0123456789' # for all numbers
-LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # all caps numbers
-
-TT_INT = 'INT'
-TT_FLOAT = 'FLOAT'
-TT_STRING = 'STRING'
-TT_DEPOSIT = 'DEPOSIT' # action
-TT_WITHDRAW = 'WITHDRAW' # action
-TT_BALANCE = 'BALANCE' # action
-TT_CREATE = 'CREATE' # action
-TT_ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
-TT_END = 'END'  # Or TT_EXIT
+from Lexer import Lexer
+from Parser import Parser
+from BankInterpreter import BankingInterpreter
+#import BankAccount
 
 #######################################
 # MAIN
 #######################################
 
 def main():
-    commands = [
-        'CREATE "Layla" "Heath"',
-        'DEPOSIT 200.00 *LH000000*',
-        'WITHDRAW 50 *MH123456*',
-        'BALANCE *01234567*',
-        'END',
-        '"hello ',
-        'PRINT',
-
-    ]
+    commands = ['CREATE "MICKEY" "MOUSE"',
+        'CREATE "CHARLIE" "BROWN"',
+        'CREATE "BUGS" "BUNNY"',
+        'CREATE "SCOOBY" "DOO"',
+        'CREATE "TIMMY" "TURNER"',
+        'DEPOSIT 500 *MM100000*',
+        'DEPOSIT 500 *CB100001*',
+        'DEPOSIT 500 *BB100002*',
+        'DEPOSIT 500 *SD100003*',
+        'DEPOSIT 500 *TT100004*'
+        ]
+    token_list = []
     for cmnd in commands:
         lexer = Lexer(cmnd)
         tokens = lexer.make_tokens()
-        print(tokens)
+        token_list += tokens
+    #print(token_list)
+
+    parser = Parser(token_list)
+    #print(parser)
+
+    AST = parser.parse()
+    interpreter = BankingInterpreter(AST)
+
+    interpreter.interpret()
+
+
+
 
 
 #######################################
@@ -83,9 +84,8 @@ class Token:  # Wyatt
 # INTERPRETER
 #######################################
 class Interpreter:  # Dom
-    '''
-    Finish Later
-    '''
+    def visiR(self, node, context):
+        method_name = f''
 
 
 #######################################
@@ -109,7 +109,8 @@ class BankAccount:  # Dom
 #######################################
 # PARSER
 #######################################
-class Parser:  # Wyatt
+
+#class Parser:  # Wyatt
     '''
     Finish Later
     '''
@@ -119,6 +120,7 @@ class Parser:  # Wyatt
 # LEXER
 #######################################
 # need to work on changing these to have 1 return statement
+'''
 class Lexer:  # Layla
 
     #
@@ -277,10 +279,11 @@ class Lexer:  # Layla
             return Token(TT_ACCOUNT_NUMBER, act_num)
         return None, IllegalCharError(start, end, "Invalid characters")
 
-
+'''
 #######################################
 # ERRORS - NEED TO FIX
 #######################################
+'''
 class Error:
     def __init__(self, pos_start, pos_end, error_name, details):
         self.pos_start = pos_start
@@ -298,6 +301,30 @@ class Error:
 class IllegalCharError(Error):
     def __init__(self, pos_start, pos_end, details):
         super().__init__(pos_start, pos_end, 'Illegal Character', details)
+'''
+'''
+def initialize_acc() :
+    accounts = ['CREATE "MICKEY" "MOUSE"',
+                'CREATE "CHARLIE" "BROWN"',
+                'CREATE "BUGS" "BUNNY"',
+                'CREATE "SCOOBY" "DOO"',
+                'CREATE "TIMMY" "TURNER"'
+                ]
+    for command in accounts :
+        run(command)
+    deposits = []
+    for acct in BankAccount.currAccounts :
+        acct_num = acct.get_accountNumber();
+        run(f'DEPOSIT 500.00 *{acct_num}*')
+def specification_tests():
+'''
+def run(command) :
+    lexer = Lexer.Lexer(command)
+    tokens = lexer.make_tokens()
+    parser = Parser(tokens)
+
+
+
 
 
 if __name__ == '__main__':
