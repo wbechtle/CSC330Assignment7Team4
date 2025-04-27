@@ -179,8 +179,10 @@ Solution: Review the command syntax examples provided above
 References and Citations
 
 Python Software Foundation. (2023). Python Language Reference, version 3.8. https://docs.python.org/3.8/
+
 Ruslan's Blog. (2019). Let's Build A Simple Interpreter. https://ruslanspivak.com/lsbasi-part1/
 YouTube Tutorial: "Create YOUR OWN Programming Language" by CodePulse. https://www.youtube.com/watch?v=Eythq9848Fg
+
 Hopcroft, J. E., Motwani, R., & Ullman, J. D. (2006). Introduction to Automata Theory, Languages, and Computation (3rd Edition). Pearson.
 
 Video Demonstration
