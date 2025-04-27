@@ -211,7 +211,7 @@ class Parser:
         # Consumes CREATE token
         self.advance()  
         # Consumes NEW token
-        self.advance()
+        # self.advance()
         # Call expect method to ensure tokens of type TT_STRING
         firstName = self.expect(Token.TT_STRING)
         lastName  = self.expect(Token.TT_STRING)

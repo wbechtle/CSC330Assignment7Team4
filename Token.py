@@ -33,7 +33,7 @@ class Token:
     # Arguements: 
     #       type_ -> token type
     #       value -> token's value from input
-    def __init__(self, type_, value):
+    def __init__(self, type_, value = None):
         self.type = type_
         self.value = value
 

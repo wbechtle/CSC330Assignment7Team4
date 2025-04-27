@@ -1,7 +1,7 @@
 from Parser import Deposit, Withdraw, Balance, CreateNew
 from BankAccount import BankAccount
 
-class BankingInterpreter:
+class Interpreter:
     def __init__(self, program):
         self.accounts = [] # list of bank account objects
         self.program = program
@@ -22,7 +22,7 @@ class BankingInterpreter:
     #
     def create_new(self, node):
         account = BankAccount(node.first, node.last) # create new Bank Account object
-        self.accounts.append(account) # add new account to the running list
+        BankAccount.allAccounts.append(account) # add new account to the running list
         print(f"NEW MEMBER {account.get_firstName()} {account.get_lastName()} "
               f"\nACCOUNT #{account.get_accountNumber()}"
               f"\nBALANCE ${account.get_balance()}\n")
@@ -31,7 +31,7 @@ class BankingInterpreter:
     def deposit(self, node):
         account = self.find_acct(node.account)
         if account is None:
-            print(f"ACCOUNT #{account} NOT FOUND.")
+            print(f"ACCOUNT #{node.account} NOT FOUND.")
         else:
             account.deposit(node.amount)
             print(f"ACCOUNT {account.get_accountNumber()} ({account.get_firstName()} {account.get_lastName()}) "
@@ -40,7 +40,7 @@ class BankingInterpreter:
     def withdraw(self, node):
         account = self.find_acct(node.account)
         if account is None:
-            print(f"ACCOUNT #{account} NOT FOUND.")
+            print(f"ACCOUNT #{node.account} NOT FOUND.")
 
         elif node.amount > account.getBalance() :
             print(f"INSUFFICIENT FUNDS")
@@ -62,7 +62,7 @@ class BankingInterpreter:
 
     def find_acct(self, account_num):
         account = None
-        for acct in self.accounts :
+        for acct in BankAccount.allAccounts :
             if acct.get_accountNumber() == account_num :
                 account = acct
         return account

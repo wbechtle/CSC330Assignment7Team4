@@ -3,7 +3,7 @@ program ::= {action} ;
 action ::= deposit_action | withdraw_action
          | balance_action | create_new_action ;
 
-deposit_action ::= "  DEPOSIT" amount account_number;
+deposit_action ::= "DEPOSIT" amount account_number;
 withdraw_action ::= "WITHDRAW" amount account_number;
 balance_action ::=  "BALANCE" account_number ;
 create_new_action ::= "CREATE NEW" first_name last_name
