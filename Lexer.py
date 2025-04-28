@@ -183,10 +183,10 @@ class Lexer:
 
         while self.current_char != None and self.current_char != "*":
             if len(act_num) < 2: # first 2 characters a checked to ensure they are letters
-                if self.current_char not in Lexer.LETTERS:
+                if self.current_char not in Token.LETTERS:
                     end = self.current_char
             else:
-                if self.current_char not in Lexer.DIGITS:
+                if self.current_char not in Token.DIGITS:
                     print(self.current_char)
                     end = self.current_char # assigned if there is an error with the following digits
             act_num += self.current_char
