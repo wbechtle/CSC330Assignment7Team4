@@ -98,6 +98,7 @@ def specification_tests():
         for test, tb in result.errors:
             print(f"  ERROR: {test.id()}")
 
+
 #####################################################################
 ####  initialize() - creates 5 accounts and adds money to them  #####
 #####################################################################
