@@ -67,6 +67,10 @@ def run_shell():
             except Exception:
                 print("INVALID COMMAND")
 
+###################################
+####     specification_tests   ####
+################################### 
+# Creates a test case class for the DSL banking system
 def specification_tests():
     class TestBankingDSL(unittest.TestCase):
         def setUp(self):
@@ -94,7 +98,10 @@ def specification_tests():
             run(f'WITHDRAW 50 *{acct.account_number.strip("*")}*')
             self.assertAlmostEqual(acct.balance, 150.0)
 
+    # Instantiate a test suite
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestBankingDSL)
+
+    # instantiate a runner object to run test: verbosity=2 -> more detailed output
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
 
