@@ -1,5 +1,12 @@
+# Dominic Stencel
+# CSC 330 100
+# Session 7
+# Final Project - AstNode Class
+# 4/12/2025
+
 # Added import - WB
 from ast import AST
+
 class ASTNode(object):
     pass
 
@@ -22,3 +29,8 @@ class NumNode(ASTNode):
     # Fixed spacing - WB
     def __repr__(self):
         return f'{self.token}'
+
+####################################################
+######     Deposit, Withdraw, CreateNew       ######
+####################################################
+# These nodes will be included in the Parser class
