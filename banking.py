@@ -15,25 +15,7 @@ import unittest
 #######################################
 
 def main():
-    BankAccount.allAccounts.clear()
-    BankAccount.currNum = 100000
-    commands = ['CREATE "MICKEY" "MOUSE"',
-        'CREATE "CHARLIE" "BROWN"',
-        'CREATE "BUGS" "BUNNY"',
-        'CREATE "SCOOBY" "DOO"',
-        'CREATE "TIMMY" "TURNER"',
-        'DEPOSIT 500 *MM100000*',
-        'DEPOSIT 500 *CB100001*',
-        'DEPOSIT 500 *BB100002*',
-        'DEPOSIT 500 *SD100003*',
-        'DEPOSIT 500 *TT100004*'
-        ]
-    token_list = []
-
-    for cmnd in commands:
-        run(cmnd)
-    print()
-
+    initialize()
     run_shell()
 
 #####################################################################
@@ -115,6 +97,31 @@ def specification_tests():
             print(f"  FAIL: {test.id()}")
         for test, tb in result.errors:
             print(f"  ERROR: {test.id()}")
+
+#####################################################################
+####  initialize() - creates 5 accounts and adds money to them  #####
+#####################################################################
+def initialize() :
+    BankAccount.allAccounts.clear()
+    BankAccount.currNum = 100000
+    commands = ['CREATE "MICKEY" "MOUSE"',
+                'CREATE "CHARLIE" "BROWN"',
+                'CREATE "BUGS" "BUNNY"',
+                'CREATE "SCOOBY" "DOO"',
+                'CREATE "TIMMY" "TURNER"',
+                'DEPOSIT 500 *MM100000*',
+                'DEPOSIT 500 *CB100001*',
+                'DEPOSIT 500 *BB100002*',
+                'DEPOSIT 500 *SD100003*',
+                'DEPOSIT 500 *TT100004*',
+
+                ]
+    token_list = []
+
+    for cmnd in commands:
+        run(cmnd)
+    print()
+
 
 if __name__ == '__main__':
     main()
