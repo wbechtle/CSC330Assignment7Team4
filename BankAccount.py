@@ -1,4 +1,8 @@
-import random
+# Dominic Stencel
+# CSC 330 100
+# Session 7
+# Final Project - BankAccount Class
+# 4/12/2025
 
 
 class BankAccount(): # removed parameters - LH
