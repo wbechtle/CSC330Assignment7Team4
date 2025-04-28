@@ -26,6 +26,7 @@ Wyatt Bechtle
 Developed the following components:
 Parser class: Parsing tokenized input into structured format
 Token class: Token representation for the language
+Specification Test
 
 
 Layla Heath
@@ -177,6 +178,8 @@ Cause: Incorrectly formatted commands
 Solution: Review the command syntax examples provided above
 
 References and Citations
+
+Unittest help: https://docs.python.org/3/library/unittest.html
 
 Python Software Foundation. (2023). Python Language Reference, version 3.8. https://docs.python.org/3.8/
 
