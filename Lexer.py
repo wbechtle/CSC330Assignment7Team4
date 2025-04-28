@@ -30,13 +30,18 @@ class Lexer:
         self.current_char = None
         self.advance()  # advances to first value upon initialization
 
-    # Moves to the nexxt character
+    ###################################################################
+    #####   advance() - Advances position to next character    ########
+    ###################################################################
     def advance(self):
         self.pos += 1 # position is increased by 1
         # assigns current_char to the character at that index
         self.current_char = self.text[self.pos] if self.pos < len(self.text) else None
         # if index out of range, current_char is assigned none
 
+    ###################################################################
+    #####   make_tokens() - creates tokens from command string   ######
+    ###################################################################
     def make_tokens(self):
         tokens = [] # list to hold the tokens
 
@@ -123,6 +128,9 @@ class Lexer:
 
         return tokens # returns the list of tokens
 
+    ###################################################################
+    #####   make_number() - checks for valid int/float input   ########
+    ###################################################################
     def make_number(self):
         num_str = '' # will become the final number
         dot_count = 0 # checks for decimal
@@ -145,7 +153,9 @@ class Lexer:
 
         return Token(token, number) # Token object returned
 
-
+    ###################################################################
+    #####    make_string() - Checks for valid String input     ########
+    ###################################################################
     def make_string(self):
         start = self.current_char # start char for Error
         self.advance() # starts at character after the quotation mark
@@ -162,7 +172,9 @@ class Lexer:
             end = self.current_char
             return None, IllegalCharError(start, end, "Closing quote missing") # informs user of missing quote
 
-
+    ###################################################################
+    ##  make_account_num() - checks for valid account number input  ###
+    ###################################################################
     def make_account_num(self):
         self.advance()
         start = self.current_char
@@ -203,7 +215,9 @@ class Error:
         return result
 
 
-# used when lexer comes across an unsupported character;
+###################################################################
+##  IllegalCharError() - Handles unsupported characters  ###
+###################################################################
 class IllegalCharError(Error):
     def __init__(self, pos_start, pos_end, details):
         super().__init__(pos_start, pos_end, 'Illegal Character', details)
